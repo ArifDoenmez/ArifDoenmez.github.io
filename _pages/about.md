@@ -19,4 +19,4 @@ Hello world! My name is Arif 👋, and I am a postdoctoral researcher in the Gro
 
 I am working on computational problems raised from topics in experimental molecular and cellular (Neuro-)Toxicology with roots in Algebra, Geometry, and Topology.
 
-{% twitter https://twitter.com/ArifDoenmez maxwidth=500 limit=3 %}
+{% twitter https://twitter.com/ArifDoenmez maxwidth=500 limit=1 %}
