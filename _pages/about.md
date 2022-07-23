@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Postdoctoral Researcher @ <a href='https://iuf-duesseldorf.de/en/'>IUF – Leibniz Research Institute for Environmental Medicine</a>, Düsseldorf, Germany.
+subtitle: Postdoctoral Researcher @ <a href='https://iuf-duesseldorf.de/en/'>IUF – Leibniz Research Institute for Environmental Medicine</a>.
 
 profile:
   align: right
