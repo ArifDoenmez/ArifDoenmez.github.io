@@ -18,3 +18,5 @@ social: true  # includes social icons at the bottom of the page
 Hello world! My name is Arif 👋, and I am a postdoctoral researcher in the Group for Alternative method development for environmental toxicity testing at the IUF – Leibniz Research Institute for Environmental Medicine.
 
 I am working on computational problems raised from topics in experimental molecular and cellular (Neuro-)Toxicology with roots in Algebra, Geometry, and Topology.
+
+{% twitter https://twitter.com/ArifDoenmez maxwidth=500 limit=3 %}
