@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+subtitle: Postdoctoral Researcher @ <a href='https://iuf-duesseldorf.de/en/'>IUF – Leibniz Research Institute for Environmental Medicine</a>, Düsseldorf, Germany.
 
 profile:
   align: right
