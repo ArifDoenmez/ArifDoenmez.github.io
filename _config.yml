@@ -133,7 +133,7 @@ news_limit: 5 # leave blank to include all the news in the `_news` folder
 # Markdown and syntax highlight
 markdown: kramdown
 highlighter: rouge
-highlight_theme_light: github  # https://github.com/jwarby/jekyll-pygments-themes
+highlight_theme_light: emacs  # https://github.com/jwarby/jekyll-pygments-themes
 highlight_theme_dark: native  # https://github.com/jwarby/jekyll-pygments-themes
 kramdown:
   input: GFM
