@@ -2,7 +2,7 @@
 layout: page
 permalink: /conferences/
 title: conferences
-description: participated, invited conferences 
+description: attended conferences & <b>talks</b> 
 nav: true
 nav_order: 3
 ---
