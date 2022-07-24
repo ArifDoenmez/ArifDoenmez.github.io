@@ -7,8 +7,11 @@ nav: true
 nav_order: 3
 ---
 <ul>
+<li><b>29.06.22 - 30.06.22, 1<sup>st</sup> Face-to-Face Meeting - Leibniz Research Network "Stem cells and organoids", Düsseldorf</b></li>
+<li><b>21.03.22, BIGS – Biomedical Image Analysis Graduate Seminar, Leibniz-Institut für Analytische Wissenschaften - ISAS - e.V., Dortmund</b></li>
 <li>22.05.19 - 24.05.19, Perspectives on representations of semi-simple Lie algebras, Bochum</li>
-<li>08.08.18 -17.08.18, Workshop and International Conference on Representations of Algebras (ICRA 2018), Prague</li>
+<li>22.05.19 - 24.05.19, Perspectives on representations of semi-simple Lie algebras, Bochum</li>
+<li><b>08.08.18 -17.08.18, Workshop and International Conference on Representations of Algebras (ICRA 2018), Prague</b></li>
 <li>27.05.18 - 02.06.18, Workshop: Interactions between Algebraic Geometry and Noncommutative Algebra, Oberwolfach</li>
 <li>21.03.17 - 24.03.17, Workshop on Quiver Grassmannians and their Applications, Wuppertal</li>
 <li>19.02.17 - 25.02.17, Workshop: Representation Theory of Quivers and Finite Dimensional Algebras, Oberwolfach</li>
