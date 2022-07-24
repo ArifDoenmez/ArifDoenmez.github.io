@@ -15,8 +15,10 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Hello world! My name is Arif 👋, and I am a postdoctoral researcher in the Group for Alternative method development for environmental toxicity testing at the IUF – Leibniz Research Institute for Environmental Medicine.
+I'm a postdoctoral researcher in the Group for Alternative method development for environmental toxicity testing at the IUF – Leibniz Research Institute for Environmental Medicine. We're on a mission to build up a bioanalytical testing laboratory for animal-free screening of chemicals, regarding their potential to disturb brain development and cause developmental neurotoxicity (DNT). I'm also working at Ruhr University Bochum, Department of Biophysics in the Bioinformatics working group of Prof. Dr. Axel Mosig, where I supervise work on applications of deep learning and statistics to biomedical image analysis. My own research interests span artificial intelligence, machine learning, and scientific computing.
 
-I am working on computational problems raised from topics in experimental molecular and cellular (Neuro-)Toxicology with roots in Algebra, Geometry, and Topology.
+Before joining IUF, I was a PhD student in the Algebra working group of Prof. Dr. Markus Reineke at Ruhr University Bochum, where I worked on geometric approaches to the problem of classification of quiver representations. Geometric properties of moduli spaces of representations of quivers were studied with topological, arithmetic, algebraic and homological methods.
+
+Current research interests include the development of interacting particle systems for computational problems raised from topics in experimental toxicology and connections between noncommutative geometry and unsupervised learning.
 
 {% twitter https://twitter.com/ArifDoenmez maxwidth=500 limit=1 %}
