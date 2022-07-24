@@ -3,7 +3,7 @@ layout: page
 permalink: /teaching/
 title: teaching
 description: 
-years: [2022, 2020, 2019, 2018, 2016, 2014]
+years: [2022, 2019, 2018, 2016, 2014]
 nav: true
 nav_order: 4
 ---
