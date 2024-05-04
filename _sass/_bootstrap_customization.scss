@@ -24,6 +24,14 @@ $web-font-path: "./FiraSans-Regular.ttf" !default;
   src: url($web-font-path) format("truetype");
 }
 // }
+$web-font-pathser: "./ZenAntiqueSoft-Regular.ttf" !default;
+// @if $web-font-path {
+// @import url($web-font-path);
+@font-face {
+  font-family: "ZenAntiqueSoft";
+  src: url($web-font-pathser) format("truetype");
+}
+
 
 :root {
   color-scheme: light;
