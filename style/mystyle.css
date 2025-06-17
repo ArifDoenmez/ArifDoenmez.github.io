@@ -48,7 +48,7 @@
         }
         
         .nav-socials svg{
-            fill: #0056b3;
+            fill: #0056b3 !important;
         }
 
         /* NEW STYLES for Talks Page */
