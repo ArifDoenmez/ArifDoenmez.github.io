@@ -116,4 +116,4 @@
         }
 
         /* Responsive Styles */
-        @media (max-width:768px){.container{margin:0 auto;padding:0}.header{padding:20px;margin-bottom:25px;border-bottom:1px solid #e0e0e0}.header h1{font-size:24px;color:#333}.nav-center,.nav-socials,.nav-right a[href="#"]{display:none}.mobile-menu-icon{display:block;font-size:40px;color:#0d2c54;font-weight:300;line-height:1;cursor:pointer}.talks-container{padding:0 20px}}
+        @media (max-width:768px){.container{margin:0 auto;padding:0}.header{padding:20px;margin-bottom:25px;border-bottom:1px solid #e0e0e0}.header h1{font-size:24px;color:#333}.nav-center,.nav-socials,.nav-right a[href="#"]{display:none}.mobile-menu-icon{display:block;font-size:40px;color:#0d2c54;font-weight:300;line-height:1;cursor:pointer}.talks-container{padding:0 20px} .page-container{padding:0 20px}}
