@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dr. Arif Dönmez</title>
+
+<style>
+/* -------------------------
+   Font: Karrik (local)
+--------------------------*/
+@font-face{
+  font-family:"Karrik";
+  src:url("./Karrik-Regular.woff2") format("woff2");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Karrik";
+  src:url("./Karrik-Italic.woff2") format("woff2");
+  font-weight:400;
+  font-style:italic;
+  font-display:swap;
+}
+
+/* -------------------------
+   Theme tokens
+--------------------------*/
+:root{
+  --bg:#f6f7f8;
+  --card-bg:#ffffff;
+  --ink:#1b1b1b;
+  --muted:#dcdfe3;
+  --radius-card:14px;
+  --radius-media:18px;
+  --shadow:0 12px 30px rgba(0,0,0,.12);
+}
+html[data-theme="dark"]{
+  --bg:#0f1113;
+  --card-bg:#171a1d;
+  --ink:#f2f5f7;
+  --muted:#2b2f35;
+  --shadow:0 14px 36px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme: dark){
+  html[data-theme="auto"]{
+    --bg:#0f1113;
+    --card-bg:#171a1d;
+    --ink:#f2f5f7;
+    --muted:#2b2f35;
+    --shadow:0 14px 36px rgba(0,0,0,.5);
+  }
+}
+
+/* -------------------------
+   Page layout
+--------------------------*/
+html,body{height:100%;}
+body{
+  margin:0;
+  font:16px/1.4 "Karrik", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--ink);
+  background:var(--card-bg);
+}
+.card{
+  width:100%;
+  min-height:100dvh;
+  background:var(--card-bg);
+  padding-bottom:max(8px, env(safe-area-inset-bottom));
+}
+
+/* -------------------------
+   Header bar
+--------------------------*/
+.bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 14px;
+  padding-top:calc(10px + env(safe-area-inset-top));
+  border-bottom:1px solid var(--muted);
+  font-weight:650;
+  font-size:14px;
+  letter-spacing:.1px;
+}
+.bar a{
+  color:inherit;
+  text-decoration:none;
+  opacity:.9;
+}
+.bar a:hover{text-decoration:underline;}
+.toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  font:inherit;
+  color:inherit;
+  background:transparent;
+  border:1px solid var(--muted);
+  border-radius:999px;
+  padding:6px 10px;
+  cursor:pointer;
+}
+
+/* -------------------------
+   Hero image
+--------------------------*/
+.hero{
+  position:relative;
+  padding:14px;
+  border-bottom:1px solid var(--muted);
+}
+.hero img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:var(--radius-media);
+  transition:opacity 1s ease-in-out;
+}
+.hero img.fade-out{opacity:0;}
+.hero .caption{
+  position:absolute;
+  right:20px;
+  bottom:12px;
+  font-family:"Fira Sans", system-ui;
+  font-size:6px;
+  font-weight:lighter;
+  color:rgba(255,255,255,0.15);
+  text-shadow:0 1px 3px rgba(0,0,0,0.5);
+  pointer-events:none;
+}
+html[data-theme="light"] .hero .caption{
+  color:rgba(0,0,0,0.55);
+  text-shadow:0 1px 2px rgba(255,255,255,0.4);
+}
+
+/* -------------------------
+   Nav list
+--------------------------*/
+.nav-wrap{position:relative;}
+.nav{
+  list-style:none;
+  margin:0;
+  padding:0 14px 14px;
+}
+.nav li{border-bottom:1px solid var(--muted);}
+.nav button{
+  all:unset;
+  display:block;
+  width:100%;
+  padding:14px 0;
+  cursor:pointer;
+  color:inherit;
+  font-size:clamp(18px, 3.4vw, 24px);
+  font-weight:650;
+}
+.nav em{font-style:italic;font-weight:400;}
+@media (hover:hover){.nav button:hover{filter:brightness(.95);}}
+
+/* -------------------------
+   Overlay panel
+--------------------------*/
+.panel{
+  position:absolute;
+  inset:0;
+  background:var(--card-bg);
+  border-top:1px solid var(--muted);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .35s ease, visibility .35s ease;
+  padding:20px 18px 26px;
+  z-index:5;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  /*
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--muted) transparent;
+  */
+}
+
+/* enable scrolling only on desktop */
+@media (min-width:600px){
+  .panel{
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:var(--muted) transparent;
+  }
+}
+
+.card.panel-open .panel{
+  opacity:1;
+  visibility:visible;
+}
+.card.panel-open .nav{visibility:hidden;}
+.panel h2{
+  font-family:"Karrik","Fira Sans",system-ui;
+  font-size:1.25rem;
+  font-weight:600;
+  margin:0 0 0.8em 0;
+  text-align:center;
+}
+.panel .panel-close{
+  position:absolute;
+  top:8px;
+  right:10px;
+  border:1px solid var(--muted);
+  background:transparent;
+  color:inherit;
+  border-radius:10px;
+  padding:4px 8px;
+  cursor:pointer;
+}
+
+/* --- Panel content typography --- */
+.panel-content p,
+.panel-content ul {
+  max-width:52ch;
+  margin:0 auto 1.4em auto;
+  line-height:1.6;
+  font-weight:300;
+  font-family:"Fira Sans", sans-serif;
+  font-size:0.97rem;
+  color:rgba(0,0,0,0.82);
+}
+html[data-theme="dark"] .panel-content p,
+html[data-theme="dark"] .panel-content ul {
+  color:rgba(255,255,255,0.82);
+}
+.panel-content strong{font-weight:500;}
+.panel-content ul{padding-left:1.2em;list-style:disc;}
+
+
+/* -------------------------
+   Desktop layout
+--------------------------*/
+@media (min-width:600px){
+  body{
+    background:radial-gradient(1200px 600px at 60% -10%,rgba(0,0,0,.05),transparent 60%),var(--bg);
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+  }
+  .card{
+    width:min(92vw,560px);
+    min-height:auto;
+    border-radius:var(--radius-card);
+    box-shadow:var(--shadow);
+    border:1px solid rgba(0,0,0,.06);
+    overflow:hidden;
+    padding-bottom:0;
+  }
+  .bar{padding-top:10px;}
+}
+
+/* -------------------------
+   Fira Sans font faces
+--------------------------*/
+@font-face{font-family:"Fira Sans";src:url("./FiraSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("./FiraSans-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("./FiraSans-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("./FiraSans-MediumItalic.ttf") format("truetype");font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("./FiraSans-Light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:"Fira Sans";src:url("./FiraSans-LightItalic.ttf") format("truetype");font-weight:300;font-style:italic;font-display:swap;}
+
+/* -------------------------
+   Fonts mix
+--------------------------*/
+body{font-family:"Fira Sans",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;}
+.bar,.nav button,#site-title{font-family:"Karrik","Fira Sans",system-ui;}
+
+/* -------------------------
+   Font credit
+--------------------------*/
+.font-credit{
+  position:fixed;
+  bottom:6px;
+  right:10px;
+  font-family:"Fira Sans",sans-serif;
+  font-size:10px;
+  letter-spacing:0.02em;
+  opacity:0.15;
+  color:var(--ink);
+  pointer-events:none;
+  user-select:none;
+}
+.font-credit a{
+  color:inherit;
+  text-decoration:none;
+  border-bottom:0.5px dotted currentColor;
+  pointer-events:auto;
+}
+.font-credit:hover{opacity:0.55;}
+
+/* --- Link styling refinement (body, panel, etc.) --- */
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+html[data-theme="dark"] a {
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+  opacity: 0.9;
+}
+
+/* For inline links inside panel content, slightly subtler */
+.panel-content a {
+  border-bottom: 1px dotted rgba(0,0,0,0.3);
+}
+html[data-theme="dark"] .panel-content a {
+  border-bottom: 1px dotted rgba(255,255,255,0.35);
+}
+.panel-content a:hover {
+  opacity: 1;
+  border-bottom-color: var(--ink);
+}
+
+
+</style>
+</head>
+
+<body>
+<main class="card" role="main" aria-labelledby="site-title">
+  <div class="bar">
+    <div id="site-title">Dr. Arif Dönmez</div>
+    <div style="display:flex; gap:.5rem; align-items:center;">
+      <button class="toggle" id="theme-toggle" aria-label="Toggle color theme" type="button"><span id="theme-label">Auto</span></button>
+      <a href="mailto:arif.doenmez@ruhr-uni-bochum.de">Email Me</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <img id="hero-image" src="BW-36.png" alt="Dr. Arif Dönmez speaking" />
+    <div class="caption">Photo: Gian-Berno Fark</div>
+  </div>
+
+  <div class="nav-wrap">
+    <ul class="nav" role="navigation" aria-label="Primary">
+      <li><button data-section="about">About</button></li>
+      <li><button data-section="research">Research</button></li>
+      <li><button data-section="papers">Papers</button></li>
+      <li><button data-section="talks">Talks</button></li>
+    </ul>
+
+    <section id="panel" class="panel" aria-hidden="true" aria-labelledby="panel-title">
+      <button class="panel-close" aria-label="Close">✕</button>
+      <h2 id="panel-title"></h2>
+      <div id="panel-content" class="panel-content"></div>
+    </section>
+  </div>
+</main>
+
+<script>
+/* Theme toggle */
+(function(){
+  const root=document.documentElement,btn=document.getElementById('theme-toggle'),label=document.getElementById('theme-label');
+  const KEY='site-theme';
+  function apply(t){root.setAttribute('data-theme',t);label.textContent=t[0].toUpperCase()+t.slice(1);}
+  apply(localStorage.getItem(KEY)||'auto');
+  btn.addEventListener('click',()=>{const c=root.getAttribute('data-theme')||'auto';
+    const n=c==='auto'?'light':c==='light'?'dark':'auto';localStorage.setItem(KEY,n);apply(n);});
+})();
+
+/* Hero image cross-fade */
+(function(){
+  const imgs=["BW-36.png","BW-32.png"];
+  const el=document.getElementById("hero-image");let i=0;
+  setInterval(()=>{el.classList.add("fade-out");
+    setTimeout(()=>{i=(i+1)%imgs.length;el.src=imgs[i];el.classList.remove("fade-out");},1000);
+  },15000);
+})();
+
+/* Panel logic with smooth close */
+(function(){
+  const card=document.querySelector('.card');
+  const panel=document.getElementById('panel');
+  const titleEl=document.getElementById('panel-title');
+  const contentEl=document.getElementById('panel-content');
+  const closeBtn=panel.querySelector('.panel-close');
+  let openKey=null;
+
+const sections = {
+  about: `
+  <p>
+  I’m an <strong>interdisciplinary researcher</strong> working between mathematics, AI, and environmental health.  
+  Trained in pure mathematics (Dr. rer. nat., geometry of moduli spaces), I now develop <strong>AI methods grounded in symmetry and structure</strong>—linking formal insight to real-world data and ethical reflection.
+  </p>
+  <p>
+  My work moves between <strong>abstract reasoning and applied research</strong>: from building interpretable models to collaborating with <strong>Environmental Protection Agencies</strong> on data from <i>in-vitro</i> toxicology.  
+  This space between theory, technology, and responsibility is where I find meaning.
+  </p>
+  <p>
+  I value clarity, collaboration, and the human side of science—and I’m always open to conversations that connect them.
+  </p>
+  `,
+
+  research: `
+  <p>
+  My research explores how <strong>symmetries, information geometry, and ethical reasoning</strong> can shape the next generation of AI.  
+  I aim to design systems that are not only <strong>robust and interpretable</strong> but also aware of the values implicit in data and computation.
+  </p>
+  <p>
+  These ideas trace back to my mathematical roots in <strong>moduli spaces</strong>—where structure reveals how meaning emerges from variation.  
+  Today, I extend that thinking to machine learning and the sciences that depend on it.
+  </p>
+  `,
+
+  papers: `
+  <ul>
+    <li>
+      <strong>A comparative study of biostatistical pipelines for benchmark concentration modeling of in vitro screening assays</strong> —
+      <em>Computational Toxicology</em>, 34, 2025, 100360.
+      <a href="https://doi.org/10.1016/j.comtox.2025.100360" target="_blank" rel="noopener">[DOI]</a>
+      <a href="https://www.sciencedirect.com/science/article/pii/S2468111325000209" target="_blank" rel="noopener">[URL]</a>
+    </li>
+
+    <li>
+      <strong>Moduli of representations of one-point extensions</strong> —
+      <em>Communications in Algebra</em>, 52(11), 2024.
+      <a href="https://doi.org/10.1080/00927872.2024.2353283" target="_blank" rel="noopener">[DOI]</a>
+      <a href="https://doi.org/10.1080/00927872.2024.2353283" target="_blank" rel="noopener">[URL]</a>
+    </li>
+
+    <li>
+      <strong>Discovering latent causes and memory modification: A computational approach using symmetry and geometry</strong> —
+      <em>NeurIPS 2023 Workshop on Symmetry and Geometry in Neural Representations</em> (PMLR 228).
+      <a href="https://proceedings.mlr.press/v228/donmez24a.html" target="_blank" rel="noopener">[URL]</a>
+      <a href="https://raw.githubusercontent.com/mlresearch/v228/main/assets/donmez24a/donmez24a.pdf" target="_blank" rel="noopener">[PDF]</a>
+    </li>
+
+    <li>
+      <strong>On the ambiguity in classification</strong> —
+      <em>NeurIPS 2022 Workshop on Symmetry and Geometry in Neural Representations</em> (PMLR 197).
+      <a href="https://proceedings.mlr.press/v197/donmez23a.html" target="_blank" rel="noopener">[URL]</a>
+      <a href="https://proceedings.mlr.press/v197/donmez23a/donmez23a.pdf" target="_blank" rel="noopener">[PDF]</a>
+    </li>
+
+    <li>
+      <strong>Establishment of an a priori protocol for the implementation and interpretation of an in-vitro testing battery for the assessment of developmental neurotoxicity</strong> —
+      <em>EFSA Supporting Publications</em>, 17(10), 2020.
+      <a href="https://doi.org/10.2903/sp.efsa.2020.EN-1938" target="_blank" rel="noopener">[DOI]</a>
+      <a href="https://efsa.onlinelibrary.wiley.com/doi/epdf/10.2903/sp.efsa.2020.EN-1938" target="_blank" rel="noopener">[PDF]</a>
+    </li>
+  </ul>
+
+  <p style="margin-top:1.2em">
+    All publications and collaborations can be found on
+    <a href="https://scholar.google.com/citations?user=qMx_mSEAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.
+  </p>
+  `,
+
+  talks: `
+  <ul>
+    <li><strong>READYAI</strong> – Partnership for the Assessment of Risks from Chemicals (2025): Talk on <em>Trust and Safety in Machine Learning</em>.</li>
+    <li><strong>Lothar-Collatz Seminar</strong> – University of Hamburg (2025): <em>Symmetry-informed machine learning: theory and applications</em>.</li>
+    <li><strong>OECD Workshop on DNT Risk Assessment</strong> – Paris (2024): Collaborative presentation on <em>hazard and uncertainty evaluation with information geometry</em>.</li>
+    <li><strong>CaLISTA Workshop</strong> – Mines Paris (2024): Poster on <em>Exploring the Geometry of Latent Causes</em>.</li>
+    <li><strong>NeurIPS Workshop</strong> – New Orleans (2023): Poster presentation of accepted paper <em>On the ambiguity in classification</em>.</li>
+    <li><strong>IKIM Talk</strong> – University Medicine Essen (2023): Invited talk on <em>Symmetries in intelligent systems</em>.</li>
+    <li><strong>Leibniz “Stem Cells and Organoids” Network</strong> – Düsseldorf (2023): Talk on <em>Embedding concentration–response data into latent space</em>.</li>
+    <li><strong>ICRA Conference</strong> – Prague (2018): Talk on <em>Moduli of representations of one-point extensions</em>.</li>
+  </ul>
+  `
+};
+
+
+  function openPanel(key){
+    openKey=key;
+    titleEl.textContent=key.charAt(0).toUpperCase()+key.slice(1);
+    contentEl.innerHTML=sections[key] || '<p>Coming soon.</p>';
+    card.classList.add('panel-open');
+    panel.setAttribute('aria-hidden','false');
+  }
+
+  function closePanel(){
+    panel.style.opacity='0';
+    panel.style.visibility='hidden';
+    setTimeout(()=>{
+      openKey=null;
+      card.classList.remove('panel-open');
+      panel.setAttribute('aria-hidden','true');
+      panel.style.opacity='';
+      panel.style.visibility='';
+    },300);
+  }
+
+  document.querySelectorAll('.nav [data-section]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const key=btn.dataset.section;
+      if(openKey===key){closePanel();}
+      else{openPanel(key);}
+    });
+  });
+  closeBtn.addEventListener('click',closePanel);
+  panel.addEventListener('click',e=>{if(e.target===panel)closePanel();});
+})();
+</script>
+
+<footer class="font-credit">
+  Karrik by Jean-Baptiste Morizot & Lucas Le Bihan. Distributed by
+  <a href="https://velvetyne.fr" target="_blank" rel="noopener">velvetyne.fr</a>.
+</footer>
+</body>
+</html>
