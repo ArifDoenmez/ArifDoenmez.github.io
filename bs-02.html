@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BS/02 · Parametric Statistical Models</title>
+
+  <style>
+    /* -------------------------
+       Font: Karrik (local)
+    --------------------------*/
+    @font-face{ font-family:"Karrik"; src:url("./Karrik-Regular.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face{ font-family:"Karrik"; src:url("./Karrik-Italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap; }
+
+    /* -------------------------
+       Font: Fira Sans (local)
+    --------------------------*/
+    @font-face{font-family:"Fira Sans";src:url("./FiraSans-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap;}
+    @font-face{font-family:"Fira Sans";src:url("./FiraSans-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap;}
+    @font-face{font-family:"Fira Sans";src:url("./FiraSans-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap;}
+    @font-face{font-family:"Fira Sans";src:url("./FiraSans-MediumItalic.ttf") format("truetype");font-weight:500;font-style:italic;font-display:swap;}
+    @font-face{font-family:"Fira Sans";src:url("./FiraSans-Light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap;}
+    @font-face{font-family:"Fira Sans";src:url("./FiraSans-LightItalic.ttf") format("truetype");font-weight:300;font-style:italic;font-display:swap;}
+
+    /* -------------------------
+       THEME ARCHITECTURE (your site vars)
+    --------------------------*/
+    :root {
+      /* LIGHT THEME (Default) */
+      --bg: #f6f7f8;
+      --card-bg: #ffffff;
+      --ink: #1b1b1b;
+      --ink-secondary: rgba(0,0,0,0.82);
+      --muted: #dcdfe3;
+      --shadow: 0 12px 30px rgba(0,0,0,0.12);
+      --link-border: rgba(0,0,0,0.25);
+      --link-dotted: rgba(0,0,0,0.3);
+
+      /* Template sizing */
+      --pageW: 920px;
+      --pagePadX: 48px;
+      --pagePadY: 44px;
+
+      /* hairlines like the screenshot */
+      --hair: rgba(0,0,0,.18);
+      --hair2: rgba(0,0,0,.12);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f1113;
+      --card-bg: #171a1d;
+      --ink: #f2f5f7;
+      --ink-secondary: rgba(255,255,255,0.82);
+      --muted: #2b2f35;
+      --shadow: 0 14px 36px rgba(0,0,0,0.5);
+      --link-border: rgba(255,255,255,0.25);
+      --link-dotted: rgba(255,255,255,0.35);
+
+      --hair: rgba(255,255,255,.22);
+      --hair2: rgba(255,255,255,.14);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      [data-theme="auto"] {
+        --bg: #0f1113;
+        --card-bg: #171a1d;
+        --ink: #f2f5f7;
+        --ink-secondary: rgba(255,255,255,0.82);
+        --muted: #2b2f35;
+        --shadow: 0 14px 36px rgba(0,0,0,0.5);
+        --link-border: rgba(255,255,255,0.25);
+        --link-dotted: rgba(255,255,255,0.35);
+
+        --hair: rgba(255,255,255,.22);
+        --hair2: rgba(255,255,255,.14);
+      }
+    }
+
+    /* Base */
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Fira Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+      transition: color .3s ease, background-color .3s ease;
+    }
+
+    a{
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--link-border);
+      transition: border-color .25s ease, color .25s ease, opacity .25s ease;
+    }
+    a:hover{
+      border-bottom-color: var(--ink);
+      opacity: .92;
+    }
+
+    /* Canvas + centered page */
+    .wrap{
+      min-height: 100%;
+      display: grid;
+      place-items: start center;
+      padding: 22px 18px 60px;
+    }
+
+    .page{
+      width: min(var(--pageW), 100%);
+      background: var(--card-bg);
+      border-left: 1px solid var(--hair);
+      border-right: 1px solid var(--hair);
+      padding: 18px var(--pagePadX) var(--pagePadY);
+      transition: background-color .3s ease;
+    }
+
+    /* Top meta area (Karrik like your bar/nav) */
+    .meta{
+      font-family: "Karrik","Fira Sans",system-ui;
+      font-size: 14px;
+      color: var(--ink-secondary);
+      letter-spacing: .1px;
+    }
+
+    .meta-row{
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--hair2);
+    }
+
+    .meta-left{
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+
+    .meta-left .crumb::before{
+      content: "→ ";
+      opacity: .6;
+    }
+
+    .meta-right{
+      white-space: nowrap;
+      opacity: .75;
+    }
+
+    /* Title block (Karrik) */
+    header{
+      padding: 42px 0 26px;
+      text-align: center;
+    }
+
+    h1{
+      font-family: "Karrik", ui-serif, Georgia, serif;
+      font-weight: 400;
+      letter-spacing: .2px;
+    }
+
+    .divider{
+      height: 1px;
+      background: var(--hair2);
+      margin: 26px 0 0;
+    }
+
+    /* Article columns */
+    article{ padding-top: 34px; }
+
+    .cols{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 46px;
+      align-items: start;
+    }
+
+    p{
+      margin: 0 0 14px;
+      max-width: 62ch;
+      font-family: inherit;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.65;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
+      color: color-mix(in srgb, var(--ink) 88%, transparent);
+    }
+
+    /* Editorial list — en-dash marker */
+    ul.bullets{
+      margin: 0 0 14px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    ul.bullets li{
+      position: relative;
+      padding-left: 1.2em;
+      font-family: inherit;
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.65;
+      color: color-mix(in srgb, var(--ink) 88%, transparent);
+      text-align: left;
+      hyphens: auto;
+      margin: 0 0 10px;
+    }
+
+    ul.bullets li::before{
+      content: "–";
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: .6;
+    }
+
+    @media (max-width: 720px){
+      ul.bullets li{ font-size: 17.5px; }
+    }
+
+    .lead{
+      font-style: italic;
+      font-weight: 300;
+      text-align: left;
+    }
+
+    .lead.section {
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .indent{ text-indent: 2.2em; }
+    .smallgap{ margin-bottom: 10px; }
+    .spacer{ height: 18px; }
+
+    .end-marker{
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: 26px;
+      font-size: 18px;
+      opacity: .35;
+    }
+
+    /* Optional: Mermaid block (kept minimal, fits your template) */
+    .mermaid{
+      grid-column: 1 / -1;
+      margin: 6px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--hair2);
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+    }
+    .mermaid svg{ max-width: 100%; height: auto; }
+
+    /* Mermaid should inherit site typography */
+    .mermaid, .mermaid svg{
+    font-family: "Fira Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial !important;
+    }
+
+    .mermaid text{
+    font-family: "Fira Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial !important;
+    font-weight: 400;
+    }
+
+    .mermaid .node rect,
+    .mermaid .node polygon,
+    .mermaid .node ellipse{
+    rx: 10px; ry: 10px; /* slightly softer corners */
+    }
+
+    .figure{
+    grid-column: 1 / -1;   /* span both columns */
+    margin-top: 10px;
+    }
+
+    .figcaption{
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-secondary);
+    opacity: .9;
+    text-align: left;
+    }
+
+    .figcaption strong{
+    font-family: "Karrik","Fira Sans",system-ui;
+    font-weight: 400;
+    }
+
+    /* Mobile */
+    @media (max-width: 720px){
+      :root{
+        --pagePadX: 22px;
+        --pagePadY: 34px;
+      }
+      header{ padding: 34px 0 18px; }
+      .cols{ grid-template-columns: 1fr; gap: 0; }
+      p{ font-size: 0.98rem; max-width: 56ch; }
+    }
+
+    @media (max-width: 380px){
+      .meta{ font-size: 13px; }
+      p{ font-size: 0.965rem; }
+    }
+
+    @media (max-width: 720px){
+      .wrap{ padding: 0; }
+      .page{
+        width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 14px;
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      p{
+        font-size: 17.5px;
+        max-width: none;
+        text-align: left;
+      }
+    }
+  </style>
+
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      displayMath: [['\\[', '\\]'], ['$$', '$$']],
+      processEscapes: true
+    },
+    output: { font: "mathjax-fira" },
+    startup: { typeset: false }
+  };
+  </script>
+
+  <script type="text/javascript" id="MathJax-script" async=""
+    src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+
+</head>
+
+<script>
+  (function() {
+    const local = localStorage.getItem('site-theme');
+    const attr = local || 'auto';
+    document.documentElement.setAttribute('data-theme', attr);
+  })();
+</script>
+
+<body>
+  <div class="wrap">
+    <main class="page">
+
+      <!-- Top meta -->
+      <div class="meta" aria-label="Top metadata">
+        <div class="meta-row">
+          <div class="meta-left">
+            <span class="crumb"><a href="../index.html">Dr. Arif Dönmez</a></span>
+            <span class="crumb"><a href="./index.html">Notes</a></span>
+            <span class="crumb">BS/02</span>
+          </div>
+          <div class="meta-right">February 2026</div>
+        </div>
+
+        <div class="meta-row" style="border-bottom-color: var(--hair);">
+          <div class="meta-left">
+            <span class="crumb">Modeling</span>
+            <span class="crumb">Bayesian Statistics</span>
+          </div>
+          <div class="meta-right">v0.1</div>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <header>
+        <h1>Parametric Statistical Models</h1>
+        <div class="divider" role="presentation"></div>
+      </header>
+
+      <!-- Content -->
+      <article>
+        <div class="cols">
+
+          <!-- LEFT COLUMN -->
+          <section>
+            <p class="lead">
+              Statistical inference has to reduce complexity: from a rich phenomenon to a tractable representation.
+              A central fork in the road is whether we model the whole distribution flexibly (nonparametric)
+              or commit to a finite-dimensional parameter (parametric).
+            </p>
+
+            <div class="spacer"></div>
+
+            <p class="lead section">1) The reduction imperative</p>
+            <p class="indent">
+              Inference becomes possible only after a reductive step: we replace the full complexity of the observed phenomenon
+              by a simplified probabilistic description that can be estimated and compared from finite data. This reduction is
+              not a defect; it is the price of having a coherent calculus of uncertainty.
+            </p>
+
+            <div class="spacer"></div>
+
+            <p class="lead section">2) Two approaches: nonparametric vs. parametric</p>
+            <p class="indent">
+              One approach aims to incorporate as much complexity as possible and estimates the underlying distribution
+              under minimal assumptions, often via functional estimation (density estimation, regression functions, etc.).
+              This is the <em>nonparametric</em> stance: the object to be learned is (in effect) infinite-dimensional.
+            </p>
+            <p class="indent">
+              Conversely, the <em>parametric</em> stance represents the distribution through a family
+              \(f(x\mid\theta)\) where the functional form is known and only a finite-dimensional parameter
+              \(\theta\) is unknown. The payoff is pragmatic: finite samples can efficiently learn only finite complexity.
+            </p>
+
+            <div class="spacer"></div>
+
+            <p class="lead section">3) Why the parametric choice is pragmatic</p>
+            <p class="indent">
+              Parametric modeling explicitly acknowledges finite-sample limits. If we can only see \(n\) observations,
+              we can reliably estimate only a limited number of degrees of freedom. Moreover, parametric models let us
+              evaluate procedures at <em>finite</em> sample sizes rather than relying solely on asymptotic intuition.
+            </p>
+
+            <div class="spacer"></div>
+
+            <p class="lead section">4) The formal object: a parametric statistical model</p>
+            <p class="indent">
+              A compact definition is:
+              a parametric statistical model consists of observing a random variable \(x\) distributed according to
+              \(f(x\mid\theta)\), where only \(\theta\) is unknown and \(\theta\) belongs to a finite-dimensional parameter
+              space \(\Theta\).
+            </p>
+
+            <div class="spacer"></div>            
+          </section>
+
+          <!-- RIGHT COLUMN -->
+          <section>
+
+            <p class="indent">
+              In practice we observe a sample \(x_1,\dots,x_n\). A unifying notation is to write the full observation vector
+              \(x = (x_1,\dots,x_n)\) as
+            </p>
+
+            <p class="indent">
+              \[
+                x \sim f(x\mid\theta),
+              \]
+            </p>
+
+            <p class="indent">
+              which covers isolated observations, dependent observations, and i.i.d. sampling. In the i.i.d. case:
+            </p>
+
+            <p class="indent">
+              \[
+                f(x\mid\theta)=\prod_{i=1}^{n} f(x_i\mid\theta).
+              \]
+            </p>
+
+            <div class="spacer"></div>
+
+            <p class="lead section">5) A Bayesian notation note: why lower-case \(x\)</p>
+            <p class="indent">
+              Some texts reserve capitals \(X\) for random variables and lower-case \(x\) for realizations. In Bayesian work,
+              we almost always condition on the realized data \(x\), and we may treat \(\theta\) itself as random. Keeping \(x\)
+              as “the data” avoids clutter—though we can revert to \(X/x\) when ambiguity matters.
+            </p>
+
+            <div class="spacer"></div>
+
+            <p class="lead section">6) What “inference on \(\theta\)” means</p>
+            <p class="indent">
+              Once the statistical model is defined, the aim of analysis is an inference about \(\theta\): we use the observation
+              \(x\) to improve knowledge about \(\theta\), and then support a decision that depends on \(\theta\).
+            </p>
+
+            <p class="indent">
+              Inference questions vary in form—some target a value (e.g., “what is \(\theta_1\)?”), others a comparison
+              (e.g., “is \(\theta_2\) larger than \(\theta_3\)?”). This is often organized as:
+            </p>
+
+            <ul class="bullets">
+              <li><strong>Estimation:</strong> infer \(\theta\) (or a function \(h(\theta)\)).</li>
+              <li><strong>Testing:</strong> assess a hypothesis about \(\theta\).</li>
+              <li><strong>Prediction:</strong> infer a future \(y\) whose distribution depends on \(\theta\), e.g. \(y\sim g(y\mid\theta,x)\).</li>
+            </ul>
+
+            <div class="spacer"></div>
+
+            <p class="indent">
+              From a decision-theoretic viewpoint, these divisions are partly conventional: estimation and testing can be expressed
+              as special cases of choosing an action to minimize expected loss.
+            </p>
+
+          </section>
+
+          <div class="end-marker">—</div>
+        </div>
+      </article>
+
+
+    </main>
+  </div>
+
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+const root = document.documentElement;
+const themeAttr = root.getAttribute("data-theme") || "auto";
+const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+const isDark =
+    themeAttr === "dark" ||
+    (themeAttr === "auto" && prefersDark);
+
+// Pull your CSS variables so Mermaid truly matches your palette
+const css = getComputedStyle(root);
+const bg        = css.getPropertyValue("--card-bg").trim() || "#171a1d";
+const ink       = css.getPropertyValue("--ink").trim() || "#f2f5f7";
+const ink2      = css.getPropertyValue("--ink-secondary").trim() || "rgba(255,255,255,0.82)";
+const hair2     = css.getPropertyValue("--hair2").trim() || "rgba(255,255,255,.14)";
+
+mermaid.initialize({
+    startOnLoad: true,
+    securityLevel: "strict",
+    theme: "base",
+    themeVariables: {
+    fontFamily: `"Fira Sans", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial`,
+    fontSize: "14px",
+
+    /* canvas */
+    background: "transparent",
+
+    /* nodes */
+    primaryColor: bg,
+    primaryTextColor: ink,
+    primaryBorderColor: hair2,
+
+    secondaryColor: bg,
+    secondaryTextColor: ink,
+    secondaryBorderColor: hair2,
+
+    tertiaryColor: bg,
+    tertiaryTextColor: ink,
+    tertiaryBorderColor: hair2,
+
+    /* lines/arrows */
+    lineColor: hair2,
+
+    /* labels */
+    labelTextColor: ink2,
+
+    /* subtle differences for dark/light (optional tweaks) */
+    darkMode: isDark
+    }
+});
+</script>
+<script>
+  // If you ever change data-theme dynamically, call this:
+  window.reRenderMermaid = async function () {
+    if (window.mermaid && window.mermaid.run) {
+      await window.mermaid.run({ querySelector: ".mermaid" });
+    }
+  };
+</script>
+  <!-- MathJax typeset -->
+  <script>
+  window.addEventListener('load', () => {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise([document.body]).catch((err) => {
+        console.error('MathJax typeset failed:', err);
+      });
+    }
+  });
+  </script>
+</body>
+</html>
