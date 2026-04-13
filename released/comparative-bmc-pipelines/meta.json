@@ -1,0 +1,8 @@
+{
+  "title": "Benchmark Modeling Pipelines",
+  "type": "Paper",
+  "categories": ["paper", "toxicology", "regulatory-statistics", "exposure"],
+  "excerpt": "A comparative study of statistical pipelines for benchmark concentration modeling in in vitro screening.",
+  "thumbnail": "thumbnail.png",
+  "external_url": "https://doi.org/10.1016/j.comtox.2025.100360"
+}

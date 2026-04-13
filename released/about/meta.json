@@ -1,0 +1,7 @@
+{
+  "title": "About",
+  "type": "About",
+  "categories": ["essay", "mathematics", "toxicology"],
+  "excerpt": "Background, methods, and the quantitative perspective behind my work across machine learning and environmental health.",
+  "thumbnail": "thumbnail.JPG"
+}
