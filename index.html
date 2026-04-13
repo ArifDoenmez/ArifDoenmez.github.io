@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Dr. Arif Dönmez</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="assets/site.css" />
+    </head>
+    <body>
+        <nav class="index-nav" aria-label="Primary site navigation">
+            <div class="index-row">
+                <button
+                    class="index-link is-active"
+                    type="button"
+                    data-filter="all"
+                >
+                    All
+                </button>
+                <button class="index-link" type="button" data-filter="paper">
+                    Papers
+                </button>
+                <button class="index-link" type="button" data-filter="talk">
+                    Talks
+                </button>
+                <button class="index-link" type="button" data-filter="essay">
+                    Essays
+                </button>
+                <button class="index-link" type="button" data-filter="system">
+                    Systems
+                </button>
+            </div>
+
+            <div class="index-row">
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="mathematics"
+                >
+                    Mathematics
+                </button>
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="machine-learning"
+                >
+                    Machine Learning
+                </button>
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="toxicology"
+                >
+                    Toxicology
+                </button>
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="regulatory-statistics"
+                >
+                    Regulatory Statistics
+                </button>
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="environment"
+                >
+                    Environment
+                </button>
+                <button class="index-link" type="button" data-filter="exposure">
+                    Exposure
+                </button>
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="ecosystems"
+                >
+                    Ecosystems
+                </button>
+                <button class="index-link" type="button" data-filter="policy">
+                    Policy
+                </button>
+                <button
+                    class="index-link"
+                    type="button"
+                    data-filter="visual-storytelling"
+                >
+                    Visual Storytelling
+                </button>
+            </div>
+        </nav>
+
+        <main>
+            <section class="feature-grid-wrap" id="top">
+                <div class="feature-grid" id="feature-grid"></div>
+                <div class="empty-state" id="empty-state">
+                    No items match this category yet.
+                </div>
+            </section>
+        </main>
+
+        <script src="assets/site.js"></script>
+    </body>
+</html>
