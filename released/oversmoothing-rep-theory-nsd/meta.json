@@ -2,7 +2,7 @@
   "title": "Oversmoothing as Representation Degeneracy in Neural Sheaf Diffusion",
   "type": "Paper",
   "categories": ["paper", "machine learning", "geometry"],
-  "excerpt": "A representation-geometric view of oversmoothing in neural sheaf diffusion, connecting incidence-quiver representations, stability, moduli, and moment-map regularization.",
+  "excerpt": "A representation-geometric view of oversmoothing in neural sheaf diffusion.",
   "thumbnail": "thumbnail.png",
   "external_url": "https://doi.org/10.48550/arXiv.2605.11178"
 }
