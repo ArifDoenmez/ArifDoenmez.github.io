@@ -1,0 +1,8 @@
+{
+  "title": "ToxCastLite: A portable semantic evidence graph linking in vitro bioactivity, in vivo toxicity, and exposure-use context",
+  "type": "Paper",
+  "categories": ["paper", "toxicology", "knowledge graph"],
+  "excerpt": "A portable semantic evidence-access system linking ToxCast in vitro bioactivity, ToxRefDB in vivo toxicity evidence, and CPDat product-use context through assay-scoped SQLite stores, RDF projection, GraphDB querying, and schema-grounded natural-language-to-SPARQL workflows.",
+  "thumbnail": "thumbnail.png",
+  "external_url": "https://toxcast-lite.github.io/"
+}
