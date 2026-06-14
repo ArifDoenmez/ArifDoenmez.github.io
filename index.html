@@ -1,109 +1,203 @@
+```html
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Dr. Arif Dönmez</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="assets/site.css" />
-    </head>
-    <body>
-        <nav class="index-nav" aria-label="Primary site navigation">
-            <div class="index-row">
-                <button
-                    class="index-link is-active"
-                    type="button"
-                    data-filter="all"
-                >
-                    All
-                </button>
-                <button class="index-link" type="button" data-filter="paper">
-                    Papers
-                </button>
-                <button class="index-link" type="button" data-filter="talk">
-                    Talks
-                </button>
-                <button class="index-link" type="button" data-filter="essay">
-                    Essays
-                </button>
-                <button class="index-link" type="button" data-filter="system">
-                    Systems
-                </button>
-            </div>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arif Dönmez</title>
 
-            <div class="index-row">
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="mathematics"
-                >
-                    Mathematics
-                </button>
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="machine-learning"
-                >
-                    Machine Learning
-                </button>
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="toxicology"
-                >
-                    Toxicology
-                </button>
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="regulatory-statistics"
-                >
-                    Regulatory Statistics
-                </button>
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="environment"
-                >
-                    Environment
-                </button>
-                <button class="index-link" type="button" data-filter="exposure">
-                    Exposure
-                </button>
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="ecosystems"
-                >
-                    Ecosystems
-                </button>
-                <button class="index-link" type="button" data-filter="policy">
-                    Policy
-                </button>
-                <button
-                    class="index-link"
-                    type="button"
-                    data-filter="visual-storytelling"
-                >
-                    Visual Storytelling
-                </button>
-            </div>
-        </nav>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        <main>
-            <section class="feature-grid-wrap" id="top">
-                <div class="feature-grid" id="feature-grid"></div>
-                <div class="empty-state" id="empty-state">
-                    No items match this category yet.
-                </div>
-            </section>
-        </main>
+    ::selection {
+      background: rgba(255, 255, 0, 0.45);
+    }
 
-        <script src="assets/site.js"></script>
-    </body>
+    html,
+    body {
+      min-height: 100vh;
+    }
+
+    html::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.16;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='18' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    body {
+      background: #c3fcb3;
+      color: #111;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      display: grid;
+      grid-template-columns: minmax(1.2rem, 1fr) minmax(auto, 39em) minmax(1.2rem, 1fr);
+    }
+
+    main {
+      grid-column: 2;
+      margin: 3.5rem 0 4rem;
+    }
+
+    nav {
+      font-family: Monaco, "Courier New", monospace;
+      font-size: 0.85rem;
+      margin-bottom: 4rem;
+      text-align: right;
+    }
+
+    nav a {
+      color: #555;
+      text-decoration: none;
+      margin-left: 1em;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #000;
+    }
+
+    h1,
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .portrait {
+      display: block;
+      width: 180px;
+      max-width: 55%;
+      height: auto;
+      margin: 0 0 1.5rem;
+      border: 1px solid #111;
+      filter: grayscale(20%);
+    }
+
+    .meta {
+      color: #555;
+      font-family: Monaco, "Courier New", monospace;
+      font-size: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .rule {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid #111;
+    }
+
+    .quiet {
+      color: #333;
+    }
+
+    @media screen and (max-width: 48em) {
+      body {
+        font-size: 14px;
+      }
+
+      main {
+        margin-top: 2rem;
+      }
+
+      nav {
+        text-align: left;
+        margin-bottom: 3rem;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 0 1em 0.4em 0;
+      }
+
+      .portrait {
+        width: 160px;
+        max-width: 70%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <nav>
+      <a class="active" href="/">about</a>
+      <a href="https://scholar.google.com/citations?user=qMx_mSEAAAAJ&hl=en">research</a>
+      <!--<a href="/notes">notes</a>-->
+      <a href="mailto:arif.doenmez@ruhr-uni-bochum.de">contact</a>
+    </nav>
+
+    <h1>Arif Dönmez</h1>
+
+    <img class="portrait" src="assets/arif.jpeg" alt="Arif Dönmez">
+
+
+    <p class="meta">
+      mathematics · environmental health · machine learning · neural computation
+    </p>
+
+    <p>
+      I trained in pure mathematics, focusing on geometry, representation
+      theory, and classification.
+    </p>
+
+    <p>
+      After my PhD, I moved into environmental health, applying math and
+      computation to neurotoxicity. At the Leibniz Research Institute, I
+      evaluate in vitro systems for neurotoxicity, led data evaluation for
+      the U.S. National Toxicology Program, co-led technical work for the
+      ENDpoiNTs project, and contributed to peer-reviewed studies.
+    </p>
+
+    <p>
+      I co-founded DNTOX, leading technical and application work in
+      regulatory toxicology. I design compliant, reproducible systems
+      integrating toxicology, statistics, and software engineering.
+    </p>
+
+    <p>
+      I also advise at the science-policy interface, serving as a hearing
+      expert for the EFSA Neurotoxicity Working Group.
+    </p>
+
+    <p>
+      Currently, I study neural and population dynamics in machine learning
+      and neuroscience, focusing on how structure is discovered and behaves
+      under constraint.
+    </p>
+
+    <!--
+    <p class="quiet">
+      NP → N → P.
+    </p>
+
+    <p class="rule">
+      Structure under constraint.
+    </p>
+      -->
+  </main>
+</body>
 </html>
+```
