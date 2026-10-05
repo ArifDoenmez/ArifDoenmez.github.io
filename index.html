@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Arif Dönmez</title>
+
+  <style>
+    :root {
+      --orange: #f8622c;
+      --ink: #171514;
+      --muted: #50342d;
+      --cream: #f5eee7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      position: relative;
+
+      /* fallback if WebGL2 is unavailable */
+      background: var(--orange);
+
+      color: var(--ink);
+
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      font-size: 14px;
+      line-height: 1.55;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(1.2rem, 1fr)
+        minmax(auto, 39em)
+        minmax(1.2rem, 1fr);
+    }
+
+    /*
+     * GPU paper texture.
+     */
+    #paper {
+      position: fixed;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    ::selection {
+      background: rgba(245, 238, 231, 0.65);
+      color: var(--ink);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+
+      grid-column: 2;
+
+      margin: 3.5rem 0 4rem;
+    }
+
+    nav {
+      font-family:
+        Monaco,
+        "Courier New",
+        monospace;
+
+      font-size: 0.85rem;
+
+      margin-bottom: 4rem;
+
+      text-align: right;
+    }
+
+    nav a {
+      color: var(--muted);
+
+      text-decoration: none;
+
+      margin-left: 1em;
+
+      transition:
+        color 0.15s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--cream);
+    }
+
+    h1 {
+      font-size: 1rem;
+      font-weight: 600;
+
+      margin-bottom: 0.25rem;
+    }
+
+    .identity {
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 1.22rem;
+      font-weight: 400;
+      line-height: 1.2;
+
+      margin-bottom: 1.3rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    a {
+      color: inherit;
+
+      text-decoration-color:
+        rgba(23, 21, 20, 0.65);
+
+      text-decoration-thickness: 1px;
+
+      text-underline-offset: 3px;
+
+      transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--cream);
+
+      text-decoration-color:
+        var(--cream);
+    }
+
+    .portrait {
+      display: block;
+
+      width: 220px;
+      max-width: 65%;
+      height: auto;
+
+      margin: 0 0 1.5rem;
+
+      border: 0;
+
+      background: transparent;
+    }
+
+    .meta {
+      color: var(--muted);
+
+      font-family:
+        Monaco,
+        "Courier New",
+        monospace;
+
+      font-size: 0.8rem;
+
+      margin-bottom: 2rem;
+    }
+
+    .meta a {
+      text-decoration: none;
+    }
+
+    .meta a:hover {
+      color: var(--cream);
+      text-decoration: none;
+    }    
+
+    @media screen and (max-width: 48em) {
+
+      main {
+        margin-top: 2rem;
+      }
+
+      nav {
+        text-align: left;
+
+        margin-bottom: 3rem;
+      }
+
+      nav a {
+        display: inline-block;
+
+        margin:
+          0
+          1em
+          0.4em
+          0;
+      }
+
+      .portrait {
+        width: 190px;
+        max-width: 75%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="paper"></canvas>
+
+  <main>
+
+    <nav>
+      <a
+        class="active"
+        href="/"
+      >
+        about
+      </a>
+
+      <a
+        href="https://scholar.google.com/citations?user=qMx_mSEAAAAJ&hl=en"
+      >
+        research
+      </a>
+
+      <a
+        href="mailto:arif.doenmez@ruhr-uni-bochum.de"
+      >
+        contact
+      </a>
+    </nav>
+
+
+    <h1>
+      Dr. Arif Dönmez
+    </h1>
+
+
+    <p class="identity">
+      Contemporary Mathematician
+    </p>
+
+
+    <img
+      class="portrait"
+      src="assets/arif-art.png"
+      alt="Arif Dönmez"
+    >
+
+
+    <p class="meta">
+      <a href="https://arxiv.org/abs/2605.11178">
+        geometric deep learning
+      </a>
+      ·
+      <a href="https://www.biorxiv.org/content/10.64898/2026.05.16.724895v1.abstract">
+        environmental health
+      </a>
+      ·
+      <a href="https://doi.org/10.12751/nncn.bc2026.148">
+        neural computation
+      </a>
+    </p>
+
+
+    <p>
+      My background is in pure mathematics, with a focus on geometry,
+      representation theory, and classification.
+    </p>
+
+
+    <p>
+      After my
+      <a
+        href="https://www.mathgenealogy.org/id.php?id=286417"
+      >
+        PhD
+      </a>,
+      I moved into environmental health, applying mathematics and computation to
+      evaluate neurotoxicity. At the
+      <a
+        href="https://iuf-duesseldorf.de/en/research/working-groups/wg-koch/"
+      >
+        Leibniz Research Institute IUF
+      </a>,
+      I led data evaluation for studies connected to the U.S. National Toxicology
+      Program, co-led technical work for the ENDpoiNTs project, and contributed to
+      peer-reviewed studies.
+    </p>
+
+
+    <p>
+      I co-founded
+      <a
+        href="https://www.htgf.de/en/htgf-investment-dntox/"
+      >
+        DNTOX
+      </a>,
+      leading technical and application work in regulatory toxicology. I design
+      compliant, reproducible systems integrating toxicology, statistics, and
+      software engineering.
+    </p>
+
+
+    <p>
+      I also advise at the science-policy interface, serving as a hearing
+      expert for the EFSA Neurotoxicity Working Group.
+    </p>
+
+
+    <p>
+      My current research spans
+      <a href="https://arxiv.org/abs/2605.11178">
+        geometric deep learning
+      </a>
+      and
+      <a href="https://doi.org/10.12751/nncn.bc2026.148">
+        neural dynamics in machine learning
+      </a>,
+      with a broader interest in how structure emerges, is represented, and behaves
+      under constraint.
+    </p>
+
+  </main>
+
+
+  <script type="module">
+
+    import {
+      mountPaperTexture
+    } from "./assets/paper-texture.js";
+
+
+    const paperCanvas =
+      document.getElementById(
+        "paper"
+      );
+
+    const today = new Date();
+
+    const dailySeed =
+      today.getFullYear() * 10000 +
+      (today.getMonth() + 1) * 100 +
+      today.getDate();
+
+    const paper =
+        mountPaperTexture(
+          document.getElementById("paper"),
+          {
+            colorBack: "#f8622c",
+            colorPaper: "#f8622c",
+            colorShadow: "#d25a34",
+
+            blending: 1,
+            distortion: 0.75,
+            clip: false,
+
+            angle: 300,
+            seed: dailySeed,
+
+            roughness: 0.4,
+            roughnessSize: 0.5,
+            roughnessRows: 0,
+
+            fiber: 0.4,
+            fiberSize: 0.5,
+
+            folds: 0.5,
+            foldSizeX: 1,
+            foldSizeY: 1,
+            foldOffsetX: 0,
+            foldOffsetY: 0,
+
+            wrinkles: 1,
+            wrinkleSize: 0.65,
+
+            crumples: 0,
+            crumpleCount: 6,
+
+            drops: 0.4,
+
+            scale: 0.9,
+            fit: "contain"
+          }
+        );
+  </script>
+
+</body>
+</html>
